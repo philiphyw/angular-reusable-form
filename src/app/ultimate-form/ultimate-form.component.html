@@ -1,0 +1,9 @@
+
+<p>Ultimate Form</p>
+<ol>
+    <li *ngFor="let control of fieldControls">
+       {{control.displayName | titlecase}}:
+        <input [(ngModel)]="fieldValues[control.name]"/>
+    </li>
+</ol>
+<button (click)="onSubmit()">Submit</button>
