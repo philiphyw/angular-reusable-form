@@ -10,8 +10,9 @@ export class AppComponent {
   @ViewChild('formControls') formControls!:ElementRef;
   ultimateFormControls :(UltimateFormControl|string)[]=[
    'name',
-    'age', 
-    {name:'favoriteColor',displayName:'My Favorite Color'}
+   {name:'age',type:'number'}, 
+   {name:'password',type:'password',placeholder:'Enter 8 - 16 digits password'}, 
+    {name:'favoriteColor',displayName:'My Favorite Color'},
   ]
   title = 'angular-reusable-form';
 

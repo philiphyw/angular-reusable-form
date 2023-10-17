@@ -3,7 +3,10 @@
 <ol>
     <li *ngFor="let control of fieldControls">
        {{control.displayName | titlecase}}:
-        <input [(ngModel)]="fieldValues[control.name]"/>
+        <input [(ngModel)]="fieldValues[control.name]"
+        [placeholder]="control.placeholder" 
+        [type]="control.type"
+        />
     </li>
 </ol>
 <button (click)="onSubmit()">Submit</button>

@@ -1,6 +1,11 @@
 import { Component, Input } from "@angular/core";
 import { UltimateFormControl } from "./altimate-form.model";
 
+const defaultControlValues={
+  type:'text',
+  placeholder:'',
+}
+
 @Component({
   selector: "app-ultimate-form",
   templateUrl: "./ultimate-form.component.html",
@@ -13,9 +18,12 @@ export class UltimateFormComponent{
   @Input() set fields(fields:(UltimateFormControl|string)[]) {
     this.fieldControls = fields.map(field =>{
       if(typeof field === "string"){
-        return {name:field, displayName:field}
+        return {...defaultControlValues,name:field, displayName:field}
     }else{
-      return field;
+      return {
+        ...defaultControlValues,
+        displayName:field.name,
+        ...field};
     }})
 
     this.fieldControls.forEach(control => {       
