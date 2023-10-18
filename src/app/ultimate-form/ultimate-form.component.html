@@ -1,6 +1,12 @@
 
-<p>Ultimate Form</p>
-<ol>
+<div *ngIf="invalidControls.length>0 else formBody">
+    <ul>
+        <li *ngFor="let invalidResult of invalidControls">{{invalidResult.controlName}} -- {{invalidResult.invalidType}}</li>
+    </ul>
+</div>
+<ng-template #formBody>
+    <p>Ultimate Form</p>
+<ul>
     <li *ngFor="let control of fieldControls">
        {{control.displayName | titlecase}}:
         <input [(ngModel)]="fieldValues[control.name]"
@@ -8,5 +14,7 @@
         [type]="control.type"
         />
     </li>
-</ol>
+</ul>
 <button (click)="onSubmit()">Submit</button>
+</ng-template>
+

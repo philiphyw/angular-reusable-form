@@ -6,6 +6,11 @@ const defaultControlValues={
   placeholder:'',
 }
 
+export interface ValidationResult{
+  controlName:string,
+  invalidType:string
+}
+
 @Component({
   selector: "app-ultimate-form",
   templateUrl: "./ultimate-form.component.html",
@@ -14,6 +19,7 @@ const defaultControlValues={
 export class UltimateFormComponent{
   fieldValues : any = {};
   fieldControls:UltimateFormControl[]=[];
+  invalidControls: (ValidationResult)[]=[];
 
   @Input() set fields(fields:(UltimateFormControl|string)[]) {
     this.fieldControls = fields.map(field =>{
@@ -37,6 +43,22 @@ export class UltimateFormComponent{
 
 
   onSubmit = () => {
+    this.invalidControls = [];
+   for(let control of this.fieldControls){
+      if(control.validationFns ){
+       for(let validateFn of control.validationFns){
+        const validationResult = validateFn(this.fieldValues[control.name]);
+        if(validationResult.foundInvalid){
+          this.invalidControls.push({controlName:control.name, invalidType:validationResult.invalidType});
+          break;
+        };
+       };
+      }
+   }
+   if (this.invalidControls.length>0){
+     return;
+   }
+   
     const output:string = Object.entries(this.fieldValues).map(entry=>`${entry[0]}:${entry[1]}`).join('\n');
     alert(output);
     // alert(JSON.stringify(this.fieldValues));

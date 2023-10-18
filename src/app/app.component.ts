@@ -1,5 +1,5 @@
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { UltimateFormControl } from './ultimate-form/altimate-form.model';
+import { UltimateFormControl, UltimateFormValidations } from './ultimate-form/altimate-form.model';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +10,8 @@ export class AppComponent {
   @ViewChild('formControls') formControls!:ElementRef;
   ultimateFormControls :(UltimateFormControl|string)[]=[
    'name',
-   {name:'age',type:'number'}, 
-   {name:'password',type:'password',placeholder:'Enter 8 - 16 digits password'}, 
+   {name:'age',type:'number',validationFns:[UltimateFormValidations.isEmpty]}, 
+   {name:'password',type:'password',placeholder:'Enter 8 - 16 digits password',validationFns:[UltimateFormValidations.isEmpty,UltimateFormValidations.isShorterThanEight]}, 
     {name:'favoriteColor',displayName:'My Favorite Color'},
   ]
   title = 'angular-reusable-form';
